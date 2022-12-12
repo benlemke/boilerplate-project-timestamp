@@ -35,28 +35,14 @@ app.get("/api/:date", function (req, res) {
     let utcMilliseconds = req.params.date;
     let date = new Date(0);
     date.setUTCMilliseconds(utcMilliseconds);
-    //console.log(typeof date);
     console.log({unix: +req.params.date, utc: date.toUTCString()});
     if(isNaN(date)){
       res.json({error: "Invalid Date"});
     } else res.json({unix: +req.params.date, utc: date.toUTCString()});
-    
- 
-    //res.json({error: "Invald Date"});
-  
-  
-//utc: date.toUTCString()
 });
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT || 3000, function () {
+var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
-
-
-//1451001600000
-//1234567890000
-//1670884328425
-//1451001600000
-//1451001600000
