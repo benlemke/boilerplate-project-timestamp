@@ -21,24 +21,25 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/", function (req, res) {
-    res.json({unix: Math.floor(new Date().getTime()), utc: new Date().toUTCString()});
+    return res.json({unix: Math.floor(new Date().getTime()), utc: new Date().toUTCString()});
 });
 
 app.get("/api/:date", function (req, res) {
+  if((new Date(parseInt(req.params.date))).toString() === "Invalid Date") {
+    return res.json({error: "Invalid Date"});
+  }
   if(new Date(req.params.date).getTime() > 0) {
     let dateUnix = new Date(req.params.date).getTime();
     let dateUTC = new Date(0);
     dateUTC.setUTCMilliseconds(dateUnix);
     console.log({unix: dateUnix, utc: dateUTC.toUTCString()});
-    res.json({unix: dateUnix, utc: dateUTC.toUTCString()});
+    return res.json({unix: dateUnix, utc: dateUTC.toUTCString()});
   } 
     let utcMilliseconds = req.params.date;
     let date = new Date(0);
     date.setUTCMilliseconds(utcMilliseconds);
     console.log({unix: +req.params.date, utc: date.toUTCString()});
-    if(isNaN(date)){
-      res.json({error: "Invalid Date"});
-    } else res.json({unix: +req.params.date, utc: date.toUTCString()});
+    return res.json({unix: +req.params.date, utc: date.toUTCString()});
 });
 
 
